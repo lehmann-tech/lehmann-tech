@@ -1,0 +1,13 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: staging
+  name: ingress
+spec:
+  backend:
+    serviceName: blog
+    servicePort: 80
+---
+

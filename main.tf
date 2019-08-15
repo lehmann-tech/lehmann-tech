@@ -45,10 +45,12 @@ resource "google_kms_key_ring" "kms_keyring_dev" {
   location = "europe-west1"
 }
 
-resource "google_kms_crypto_key" "kms_crypto_key_etcd_database_password_dev" {
-  name = "etcd-database-password"
-  key_ring = "${google_kms_key_ring.kms_keyring_dev.self_link}"
-}
+# Waiting for a scheduled deletion
+
+# resource "google_kms_crypto_key" "kms_crypto_key_etcd_database_password_dev" {
+#   name     = "etcd-database-password"
+#   key_ring = "${google_kms_key_ring.kms_keyring_dev.self_link}"
+# }
 
 resource "google_compute_network" "dev_vpc_network" {
   name                    = "dev"
@@ -67,7 +69,7 @@ resource "google_kms_key_ring" "kms_keyring_staging" {
 }
 
 resource "google_kms_crypto_key" "kms_crypto_key_etcd_database_password_staging" {
-  name = "etcd-database-password"
+  name     = "etcd-database-password"
   key_ring = "${google_kms_key_ring.kms_keyring_staging.self_link}"
 }
 
@@ -85,7 +87,7 @@ resource "google_container_cluster" "staging_container_cluster" {
   network = "${google_compute_network.staging_vpc_network.self_link}"
 
   database_encryption {
-    state = "ENCRYPTED"
+    state    = "ENCRYPTED"
     key_name = "${google_kms_crypto_key.kms_crypto_key_etcd_database_password_staging.self_link}"
   }
 
@@ -93,7 +95,7 @@ resource "google_container_cluster" "staging_container_cluster" {
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
   remove_default_node_pool = true
-  initial_node_count = 1
+  initial_node_count       = 1
 
   master_auth {
     username = ""
@@ -124,4 +126,8 @@ resource "google_container_node_pool" "staging_container_node_pool" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
+}
+
+resource "google_compute_global_address" "ip_address_staging" {
+  name = "staging"
 }
