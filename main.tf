@@ -19,6 +19,7 @@ resource "google_compute_ssl_policy" "ssl_policy" {
   min_tls_version = "TLS_1_2"
 }
 
+
 # Test stuff
 # resource "google_compute_network" "vpc_network" {
 #   name                    = "terraform-network"
@@ -86,11 +87,17 @@ resource "google_compute_network" "staging_vpc_network" {
   auto_create_subnetworks = "true"
 }
 
+data "google_container_engine_versions" "container_engine_versions_staging" {
+  location       = "us-central1-b"
+  version_prefix = "1.13."
+}
+
 resource "google_container_cluster" "staging_container_cluster" {
   provider = "google-beta"
 
   name     = "staging"
   location = "europe-west1"
+  min_master_version = "${data.google_container_engine_versions.container_engine_versions_staging.latest_master_version}"
 
   network = "${google_compute_network.staging_vpc_network.self_link}"
 
@@ -120,6 +127,8 @@ resource "google_container_node_pool" "staging_container_node_pool" {
   location   = "europe-west1"
   cluster    = "${google_container_cluster.staging_container_cluster.name}"
   node_count = 2
+
+  version = "${data.google_container_engine_versions.container_engine_versions_staging.latest_master_version}"
 
   node_config {
     machine_type = "n1-standard-1"
