@@ -11,6 +11,14 @@ provider "google-beta" {
   zone    = "europe-west1-b"
 }
 
+# Common/global resources
+
+resource "google_compute_ssl_policy" "ssl_policy" {
+  name            = "ssl-policy"
+  profile         = "MODERN"
+  min_tls_version = "TLS_1_2"
+}
+
 # Test stuff
 # resource "google_compute_network" "vpc_network" {
 #   name                    = "terraform-network"

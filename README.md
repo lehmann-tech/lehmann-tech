@@ -23,3 +23,4 @@
 
 - create DNS records (zone, then record set)
 - deploy manually managed TLS certs
+- assign the ssl-policy `ssl-policy` to the load balancers, and enable quic negotiation (load balancers -> select -> edit -> frontend config -> dropdowns)
