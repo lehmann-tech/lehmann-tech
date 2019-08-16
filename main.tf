@@ -19,6 +19,37 @@ resource "google_compute_ssl_policy" "ssl_policy" {
   min_tls_version = "TLS_1_2"
 }
 
+resource "google_dns_managed_zone" "dns_zone_lehmann_tech" {
+  name = "lehmann-tech"
+  dns_name = "lehmann.tech."
+}
+
+resource "google_dns_record_set" "dns_record_set_lehmann_tech" {
+  name = "staging.${google_dns_managed_zone.dns_zone_lehmann_tech.dns_name}"
+  managed_zone = "${google_dns_managed_zone.dns_zone_lehmann_tech.name}"
+  type = "A"
+  ttl = 300 # seconds
+
+  rrdatas = [
+    "${google_compute_global_address.ip_address_staging.address}"
+  ]
+}
+
+resource "google_dns_managed_zone" "dns_zone_unwanted_fun" {
+  name = "unwanted-fun"
+  dns_name = "unwanted.fun."
+}
+
+resource "google_dns_record_set" "dns_record_set_unwanted_fun" {
+  name = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+  managed_zone = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
+  type = "A"
+  ttl = 300 # seconds
+
+  rrdatas = [
+    "${google_compute_global_address.ip_address_staging.address}"
+  ]
+}
 
 # Test stuff
 # resource "google_compute_network" "vpc_network" {
