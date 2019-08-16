@@ -17,8 +17,12 @@
 
 1. create project
 2. enable billing, enable Compute/Kubernetes API
-3. create terraform service account user, grant permissions
-4. grant roles to kubernetes engine service account (Cloud KMS CryptoKey Encrypter/Decrypter, Service Account User)
+3. request increased quota limits for
+  - Compute Engine API: Static IP addresses global (2 per environment (1 main ingress, 1 monitoring ingress), so 6)
+  - Compute Engine API: CPUS (1 per node per environment, so 6 * 3 = 18)
+  - Compute Engine API: In-use IP addresses (1 per node per environment, so 6 * 3 = 18)
+4. create terraform service account user, grant permissions
+5. grant roles to kubernetes engine service account (Cloud KMS CryptoKey Encrypter/Decrypter, Service Account User)
 
 
 - create DNS records (zone, then record set)
