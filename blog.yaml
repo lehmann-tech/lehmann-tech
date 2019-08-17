@@ -24,10 +24,10 @@ spec:
 apiVersion: networking.gke.io/v1beta1
 kind: ManagedCertificate
 metadata:
-  name: staging-unwanted-fun
+  name: dev-unwanted-fun
 spec:
   domains:
-    - staging.unwanted.fun
+    - dev.unwanted.fun
 ---
 apiVersion: v1
 kind: Service
