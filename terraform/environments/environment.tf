@@ -2,6 +2,14 @@ variable "cluster_name" {
   type = string
 }
 
+variable "dns_zone_name" {
+  type = string
+}
+
+variable "dns_name" {
+  type = string
+}
+
 # Note: KeyRings cannot be deleted from Google Cloud Platform.
 # Destroying a Terraform-managed KeyRing will remove it from state
 # but will not delete the resource on the server.
@@ -14,6 +22,21 @@ resource "google_kms_key_ring" "kms_keyring" {
 resource "google_kms_crypto_key" "kms_crypto_key_etcd_database_encryption_password" {
   name     = "etcd-database-encryption-password"
   key_ring = google_kms_key_ring.kms_keyring.self_link
+}
+
+resource "google_compute_global_address" "ip_address" {
+  name = var.cluster_name
+}
+
+resource "google_dns_record_set" "dns_record_set_unwanted_fun" {
+  managed_zone = var.dns_zone_name
+  name = var.dns_name
+  type = "A"
+  ttl = 300 # seconds = 5 minutes
+
+  rrdatas = [
+    "${google_compute_global_address.ip_address.address}"
+  ]
 }
 
 resource "google_compute_network" "vpc_network" {
