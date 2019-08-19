@@ -25,6 +25,7 @@
 5. grant roles to kubernetes engine service account (Cloud KMS CryptoKey Encrypter/Decrypter, Service Account User)
 
 
-- create DNS records (zone, then record set)
-- deploy manually managed TLS certs
+- deploy any manually managed TLS certs
+- apply kubernetes cluster config (deployments, services, etc.)
 - assign the ssl-policy `ssl-policy` to the load balancers, and enable quic negotiation (load balancers -> select -> edit -> frontend config -> dropdowns)
+- install monitoring stuff

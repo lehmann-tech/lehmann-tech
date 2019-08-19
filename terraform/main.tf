@@ -44,3 +44,11 @@ module "staging_environment" {
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }
+
+module "prod_environment" {
+  source = "./environments"
+
+  cluster_name = "prod"
+  dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
+  dns_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+}

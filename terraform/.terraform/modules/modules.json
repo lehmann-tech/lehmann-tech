@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"dev_environment","Source":"./environments","Dir":"environments"},{"Key":"staging_environment","Source":"./environments","Dir":"environments"}]}
+{"Modules":[{"Key":"dev_environment","Source":"./environments","Dir":"environments"},{"Key":"staging_environment","Source":"./environments","Dir":"environments"},{"Key":"prod_environment","Source":"./environments","Dir":"environments"},{"Key":"","Source":"","Dir":"."}]}
