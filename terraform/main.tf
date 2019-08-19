@@ -32,7 +32,7 @@ module "dev_environment" {
 
   cluster_name = "dev"
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
-  dns_name = "dev.unwanted.fun"
+  dns_name = "dev.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }
 
 # staging environment
@@ -42,5 +42,5 @@ module "staging_environment" {
 
   cluster_name = "staging"
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
-  dns_name = "staging.unwanted.fun"
+  dns_name = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }
