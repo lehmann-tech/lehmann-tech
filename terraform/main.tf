@@ -31,6 +31,7 @@ module "dev_environment" {
   source = "./environments"
 
   cluster_name = "dev"
+  cluster_location = "europe-west1-c" # zonal cluster
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name = "dev.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }
@@ -41,6 +42,7 @@ module "staging_environment" {
   source = "./environments"
 
   cluster_name = "staging"
+  cluster_location = "europe-west1-b" # zonal cluster
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }
@@ -49,6 +51,7 @@ module "prod_environment" {
   source = "./environments"
 
   cluster_name = "prod"
+  cluster_location = "europe-west1" # regional cluster
   dns_zone_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name = "${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 }

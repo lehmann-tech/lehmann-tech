@@ -2,6 +2,16 @@ variable "cluster_name" {
   type = string
 }
 
+variable "cluster_location" {
+  type = string
+  description = <<EOT
+                The location of the cluster and its node pool.
+                Specify a region (such as europe-west1) for a regional cluster replicated
+                across all that region's zones, or specify a zone (such as europe-west1-b)
+                for a zonal cluster with nodes in only one zone.
+                EOT
+}
+
 variable "dns_zone_name" {
   type = string
 }
@@ -52,7 +62,7 @@ resource "google_container_cluster" "container_cluster" {
   provider = "google-beta"
 
   name     = var.cluster_name
-  location = "europe-west1"
+  location = var.cluster_location
   min_master_version = data.google_container_engine_versions.container_engine_versions.latest_master_version
 
   network = google_compute_network.vpc_network.self_link
@@ -80,7 +90,7 @@ resource "google_container_cluster" "container_cluster" {
 
 resource "google_container_node_pool" "container_node_pool" {
   name       = "${var.cluster_name}-node-pool"
-  location   = "europe-west1"
+  location   = var.cluster_location
   cluster    = google_container_cluster.container_cluster.name
   node_count = 2
 
