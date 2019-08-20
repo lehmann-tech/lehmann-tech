@@ -21,14 +21,6 @@ spec:
           ports:
             - containerPort: 5678
 ---
-apiVersion: networking.gke.io/v1beta1
-kind: ManagedCertificate
-metadata:
-  name: staging-unwanted-fun
-spec:
-  domains:
-    - staging.unwanted.fun
----
 apiVersion: v1
 kind: Service
 metadata:

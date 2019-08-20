@@ -1,4 +1,3 @@
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -6,9 +5,3 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: staging
     networking.gke.io/managed-certificates: staging-unwanted-fun
   name: staging-ingress
-spec:
-  backend:
-    serviceName: blog
-    servicePort: 80
----
-

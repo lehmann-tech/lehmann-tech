@@ -1,0 +1,11 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  backend:
+    serviceName: blog
+    servicePort: 80
+---
+
