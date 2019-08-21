@@ -1,8 +1,16 @@
+kind: Kustomization
+
 bases:
 - ../base
 
 patchesStrategicMerge:
-- patch.yaml
+  - ingress-patch.yaml
+  - managedcertificate-patch.yaml
 
-resources:
-- managedcert.yaml
+patchesJson6902:
+- target:
+    group: extensions
+    version: v1beta1
+    kind: Ingress
+    name: ingress
+  path: ingress-json-patch.yaml

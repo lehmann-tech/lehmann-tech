@@ -5,3 +5,7 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: prod
     networking.gke.io/managed-certificates: unwanted-fun
   name: ingress
+spec:
+  backend:
+    serviceName: blog
+    servicePort: 80

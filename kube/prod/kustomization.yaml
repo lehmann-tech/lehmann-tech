@@ -1,6 +1,2 @@
 bases:
 - ../base
-
-resources:
-- ingress.yaml
-- managedcert.yaml

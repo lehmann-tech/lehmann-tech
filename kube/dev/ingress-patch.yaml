@@ -4,4 +4,4 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: dev
     networking.gke.io/managed-certificates: dev-unwanted-fun
-  name: dev-ingress
+  name: ingress

@@ -1,7 +1,0 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: prod
-    networking.gke.io/managed-certificates: unwanted-fun
-  name: ingress
