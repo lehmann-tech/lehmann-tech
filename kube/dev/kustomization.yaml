@@ -1,4 +1,6 @@
 bases:
 - ../base
 
-namespace: default
+resources:
+- managedcert.yaml
+- ingress.yaml

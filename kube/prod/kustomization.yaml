@@ -1,8 +1,6 @@
 bases:
 - ../base
 
-patchesStrategicMerge:
-- patch.yaml
-
 resources:
+- ingress.yaml
 - managedcert.yaml
