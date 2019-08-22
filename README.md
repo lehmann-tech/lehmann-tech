@@ -29,3 +29,7 @@
 - apply kubernetes cluster config (deployments, services, etc.)
 - assign the ssl-policy `ssl-policy` to the load balancers, and enable quic negotiation (load balancers -> select -> edit -> frontend config -> dropdowns)
 - install monitoring stuff
+
+# Todo
+
+- Set up a remote backend for storing (and locking) state
