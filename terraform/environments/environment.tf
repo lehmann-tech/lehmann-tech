@@ -2,6 +2,14 @@ variable "cluster_name" {
   type = string
 }
 
+variable "is_regional" {
+  type = bool
+  description = <<EOT
+                true if the environment is regional (spread across a region),
+                or false if the environment is zonal (limited to a single zone).
+                EOT
+}
+
 variable "cluster_location" {
   type = string
   description = <<EOT
@@ -55,7 +63,8 @@ resource "google_compute_network" "vpc_network" {
 }
 
 data "google_container_engine_versions" "container_engine_versions" {
-  version_prefix = "1.13."
+  location = var.cluster_location
+  version_prefix = "1.13.7-gke.19"
 }
 
 resource "google_container_cluster" "container_cluster" {
@@ -108,5 +117,29 @@ resource "google_container_node_pool" "container_node_pool" {
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/cloud-platform"
     ]
+  }
+}
+
+resource "google_sql_database_instance" "sql_instance" {
+  count = var.cluster_name == "dev" ? 1 : 0
+  name = var.cluster_name
+
+  database_version = "POSTGRES_9_6"
+
+  settings {
+    tier              = "db-custom-1-3840"
+    availability_type = var.is_regional ? "REGIONAL" : "ZONAL"
+    backup_configuration {
+      enabled    = true
+      start_time = "05:00"
+    }
+    disk_size = 20
+    disk_type = "PD_SSD"
+    ip_configuration {
+      private_network = google_compute_network.vpc_network.self_link
+    }
+    location_preference {
+      zone = var.is_regional ? null : var.cluster_location
+    }
   }
 }
