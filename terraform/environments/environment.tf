@@ -28,6 +28,11 @@ variable "dns_name" {
   type = string
 }
 
+variable sql_user_backend_password {
+  type = "string"
+  description = "Password of the Cloud SQL database 'backend' user."
+}
+
 # Note: KeyRings cannot be deleted from Google Cloud Platform.
 # Destroying a Terraform-managed KeyRing will remove it from state
 # but will not delete the resource on the server.
@@ -121,7 +126,6 @@ resource "google_container_node_pool" "container_node_pool" {
 }
 
 resource "google_sql_database_instance" "sql_instance" {
-  count = var.cluster_name == "dev" ? 1 : 0
   name = var.cluster_name
 
   database_version = "POSTGRES_9_6"
@@ -141,5 +145,23 @@ resource "google_sql_database_instance" "sql_instance" {
     location_preference {
       zone = var.is_regional ? null : var.cluster_location
     }
+  }
+}
+
+resource "google_sql_user" "backend" {
+  name = "backend"
+
+  instance = google_sql_database_instance.sql_instance.name
+  password = var.sql_user_backend_password
+}
+
+resource "google_sql_database" "core" {
+  name = "core"
+
+  instance = google_sql_database_instance.sql_instance.name
+  timeouts {
+    create = null
+    update = null
+    delete = null
   }
 }

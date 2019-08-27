@@ -10,6 +10,7 @@ provider "google-beta" {
   region  = "europe-west1"
 }
 
+
 # Common/global resources
 
 resource "google_compute_ssl_policy" "ssl_policy" {
@@ -23,6 +24,11 @@ resource "google_dns_managed_zone" "dns_zone_unwanted_fun" {
   dns_name = "unwanted.fun."
 }
 
+variable "sql_user_backend_password" {
+  type = "string"
+  description = "Password of the Cloud SQL database 'backend' user."
+}
+
 # dev environment
 
 module "dev_environment" {
@@ -33,6 +39,8 @@ module "dev_environment" {
   cluster_location = "europe-west1-c" # zonal cluster
   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name         = "dev.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+
+  sql_user_backend_password = var.sql_user_backend_password
 }
 
 # staging environment
@@ -45,6 +53,8 @@ module "staging_environment" {
   cluster_location = "europe-west1-b" # zonal cluster
   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name         = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+
+  sql_user_backend_password = var.sql_user_backend_password
 }
 
 module "prod_environment" {
@@ -55,4 +65,6 @@ module "prod_environment" {
   cluster_location = "europe-west1" # regional cluster
   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
   dns_name         = "${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+
+  sql_user_backend_password = var.sql_user_backend_password
 }
