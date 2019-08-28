@@ -21,6 +21,7 @@
     - Compute Engine API
     - Kubernetes Engine API
     - Service Networking API
+    - Cloud Resource Manager API
 4. request increased quota limits for
   - Compute Engine API: Static IP addresses global (2 per environment (1 main ingress, 1 monitoring ingress), so 6)
   - Compute Engine API: CPUS (1 per node per environment, so 6 * 3 = 18)

@@ -5,12 +5,6 @@ provider "google" {
   region  = "europe-west1"
 }
 
-provider "google-beta" {
-  project = "lehmann-tech"
-  region  = "europe-west1"
-}
-
-
 # Common/global resources
 
 resource "google_compute_ssl_policy" "ssl_policy" {

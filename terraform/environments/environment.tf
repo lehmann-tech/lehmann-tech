@@ -125,10 +125,28 @@ resource "google_container_node_pool" "container_node_pool" {
   }
 }
 
+resource "google_compute_global_address" "cloudsql" {
+  name = "cloudsql-network-${var.cluster_name}"
+  purpose = "VPC_PEERING"
+  address_type = "INTERNAL"
+  prefix_length = 16
+  network = google_compute_network.vpc_network.self_link
+}
+
+resource "google_service_networking_connection" "cloudsql" {
+  network                 = google_compute_network.vpc_network.self_link
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.cloudsql.name]
+}
+
 resource "google_sql_database_instance" "sql_instance" {
-  name = var.cluster_name
+  name = "${var.cluster_name}-db"
 
   database_version = "POSTGRES_9_6"
+
+  depends_on = [
+    "google_service_networking_connection.cloudsql"
+  ]
 
   settings {
     tier              = "db-custom-1-3840"
