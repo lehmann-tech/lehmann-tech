@@ -69,7 +69,7 @@ resource "google_compute_network" "vpc_network" {
 
 data "google_container_engine_versions" "container_engine_versions" {
   location = var.cluster_location
-  version_prefix = "1.13.7-gke.19"
+  version_prefix = "1."
 }
 
 resource "google_container_cluster" "container_cluster" {
