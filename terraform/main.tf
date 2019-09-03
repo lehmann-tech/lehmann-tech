@@ -18,34 +18,34 @@ resource "google_dns_managed_zone" "dns_zone_unwanted_fun" {
   dns_name = "unwanted.fun."
 }
 
-variable "sql_user_backend_password_dev" {
-  type = "string"
-  description = "Password of the Cloud SQL database 'backend' user in the dev cluster."
-}
+# variable "sql_user_backend_password_dev" {
+#   type        = "string"
+#   description = "Password of the Cloud SQL database 'backend' user in the dev cluster."
+# }
 
 variable "sql_user_backend_password_staging" {
-  type = "string"
+  type        = "string"
   description = "Password of the Cloud SQL database 'backend' user in the staging cluster."
 }
 
-variable "sql_user_backend_password_prod" {
-  type = "string"
-  description = "Password of the Cloud SQL database 'backend' user in the prod cluster."
-}
+# variable "sql_user_backend_password_prod" {
+#   type        = "string"
+#   description = "Password of the Cloud SQL database 'backend' user in the prod cluster."
+# }
 
 # dev environment
 
-module "dev_environment" {
-  source = "./environments"
+# module "dev_environment" {
+#   source = "./environments"
 
-  cluster_name     = "dev"
-  is_regional      = false
-  cluster_location = "europe-west1-c" # zonal cluster
-  dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
-  dns_name         = "dev.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+#   cluster_name     = "dev"
+#   is_regional      = false
+#   cluster_location = "europe-west1-c" # zonal cluster
+#   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
+#   dns_name         = "dev.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 
-  sql_user_backend_password = var.sql_user_backend_password_dev
-}
+#   sql_user_backend_password = var.sql_user_backend_password_dev
+# }
 
 # staging environment
 
@@ -61,14 +61,14 @@ module "staging_environment" {
   sql_user_backend_password = var.sql_user_backend_password_staging
 }
 
-module "prod_environment" {
-  source = "./environments"
+# module "prod_environment" {
+#   source = "./environments"
 
-  cluster_name     = "prod"
-  is_regional      = true
-  cluster_location = "europe-west1" # regional cluster
-  dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
-  dns_name         = "${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+#   cluster_name     = "prod"
+#   is_regional      = true
+#   cluster_location = "europe-west1" # regional cluster
+#   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
+#   dns_name         = "${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
 
-  sql_user_backend_password = var.sql_user_backend_password_prod
-}
+#   sql_user_backend_password = var.sql_user_backend_password_prod
+# }
