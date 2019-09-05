@@ -7,26 +7,26 @@ provider "google" {
 
 # Common/global resources
 
-resource "google_compute_ssl_policy" "ssl_policy" {
-  name            = "ssl-policy"
-  profile         = "MODERN"
-  min_tls_version = "TLS_1_2"
-}
-
-resource "google_dns_managed_zone" "dns_zone_unwanted_fun" {
-  name     = "unwanted-fun"
-  dns_name = "unwanted.fun."
-}
+# resource "google_compute_ssl_policy" "ssl_policy" {
+#   name            = "ssl-policy"
+#   profile         = "MODERN"
+#   min_tls_version = "TLS_1_2"
+# }
+# 
+# resource "google_dns_managed_zone" "dns_zone_unwanted_fun" {
+#   name     = "unwanted-fun"
+#   dns_name = "unwanted.fun."
+# }
 
 # variable "sql_user_backend_password_dev" {
 #   type        = "string"
 #   description = "Password of the Cloud SQL database 'backend' user in the dev cluster."
 # }
 
-variable "sql_user_backend_password_staging" {
-  type        = "string"
-  description = "Password of the Cloud SQL database 'backend' user in the staging cluster."
-}
+# variable "sql_user_backend_password_staging" {
+#   type        = "string"
+#   description = "Password of the Cloud SQL database 'backend' user in the staging cluster."
+# }
 
 # variable "sql_user_backend_password_prod" {
 #   type        = "string"
@@ -49,17 +49,17 @@ variable "sql_user_backend_password_staging" {
 
 # staging environment
 
-module "staging_environment" {
-  source = "./environments"
-
-  cluster_name     = "staging"
-  is_regional      = false
-  cluster_location = "europe-west1-b" # zonal cluster
-  dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
-  dns_name         = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
-
-  sql_user_backend_password = var.sql_user_backend_password_staging
-}
+# module "staging_environment" {
+#   source = "./environments"
+# 
+#   cluster_name     = "staging"
+#   is_regional      = false
+#   cluster_location = "europe-west1-b" # zonal cluster
+#   dns_zone_name    = "${google_dns_managed_zone.dns_zone_unwanted_fun.name}"
+#   dns_name         = "staging.${google_dns_managed_zone.dns_zone_unwanted_fun.dns_name}"
+# 
+#   sql_user_backend_password = var.sql_user_backend_password_staging
+# }
 
 # module "prod_environment" {
 #   source = "./environments"
